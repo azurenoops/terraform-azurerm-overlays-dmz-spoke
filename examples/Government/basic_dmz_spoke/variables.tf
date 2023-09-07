@@ -59,33 +59,27 @@ variable "lock_level" {
 ################################
 
 #################
-# Identity    ###
+#      DMZ    ###
 #################
 
-variable "id_name" {
+variable "dmz_name" {
   description = "A name for the id. It defaults to id-core."
   type        = string
-  default     = "id-core"
+  default     = "dmz"
 }
 
-variable "id_vnet_address_space" {
+variable "dmz_vnet_address_space" {
   description = "The address space of the operations virtual network."
   type        = list(string)
   default     = ["10.8.9.0/26"]
 }
 
-variable "id_subnets" {
+variable "dmz_subnets" {
   description = "The subnets of the operations virtual network."
   default     = {}
 }
 
-variable "enable_forced_tunneling_on_id_route_table" {
-  description = "Enables forced tunneling on the operations route table."
-  type        = bool
-  default     = true
-}
-
-variable "id_private_dns_zones" {
+variable "dmz_private_dns_zones" {
   description = "The private DNS zones of the operations virtual network."
   type        = list(string)
   default     = []

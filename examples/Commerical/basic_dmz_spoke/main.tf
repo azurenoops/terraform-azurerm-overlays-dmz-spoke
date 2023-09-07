@@ -1,6 +1,6 @@
 
 module "mod_vnet_spoke" {
-  #source  = "azurenoops/overlays-workload-spoke/azurerm"
+  #source  = "azurenoops/overlays-dmz-spoke/azurerm"
   #version = "~> x.x.x"
   source = "../../.."
 

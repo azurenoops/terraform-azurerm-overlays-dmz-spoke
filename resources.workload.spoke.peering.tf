@@ -13,6 +13,7 @@
 provider "azurerm" {
   alias           = "hub_network"
   subscription_id = element(split("/", var.hub_virtual_network_id), 2)
+  skip_provider_registration = var.environment == "usgovernment" ? true : false
   features {}
 }
 
