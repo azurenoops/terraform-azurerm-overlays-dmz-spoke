@@ -12,7 +12,7 @@ module "mod_vnet_spoke" {
   deploy_environment          = var.deploy_environment
   org_name                    = var.org_name
   environment                 = var.environment
-  workload_name               = var.id_name
+  workload_name               = var.dmz_name
 
   # Collect Spoke Virtual Network Parameters
   # Spoke network details to create peering and other setup
@@ -31,19 +31,19 @@ module "mod_vnet_spoke" {
   log_analytics_logs_retention_in_days = 30
 
   # Provide valid VNet Address space for spoke virtual network.    
-  virtual_network_address_space = var.id_vnet_address_space # (Required)  Spoke Virtual Network Parameters
+  virtual_network_address_space = var.dmz_vnet_address_space # (Required)  Spoke Virtual Network Parameters
 
   # (Required) Multiple Subnets, Service delegation, Service Endpoints, Network security groups
   # These are default subnets with required configuration, check README.md for more details
   # Route_table and NSG association to be added automatically for all subnets listed here.
   # subnet name will be set as per Azure naming convention by defaut. expected value here is: <App or project name>
-  spoke_subnets = var.id_subnets
+  spoke_subnets = var.dmz_subnets
 
   # Private DNS Zone Settings
   # If you do want to create addtional Private DNS Zones, 
   # add in the list of private_dns_zones to be created.
   # else, remove the private_dns_zones argument.
-  private_dns_zones = var.id_private_dns_zones
+  private_dns_zones = var.dmz_private_dns_zones
 
   # By default, this will apply resource locks to all resources created by this module.
   # To disable resource locks, set the argument to `enable_resource_locks = false`.

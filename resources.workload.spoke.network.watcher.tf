@@ -21,7 +21,13 @@ data "azurerm_network_watcher" "nwatcher" {
 # Network flow logs for subnet and NSG
 #-----------------------------------------
 resource "azurerm_network_watcher_flow_log" "nwflog" {
-  for_each                  = var.spoke_subnets
+  //This basically check to see if the user has defined the nsg_subnet_rules block for each
+  //  subnet variable and if one is found then make a flow log for that NSG
+  for_each = {
+    for subnet, values in var.spoke_subnets : 
+        subnet => values if values.nsg_subnet_rules != null
+  }
+
   name                      = lower("Network-Watcher-flog-log-${each.value.name}")
   network_watcher_name      = data.azurerm_network_watcher.nwatcher.name
   resource_group_name       = "NetworkWatcherRG" # Must provide Netwatcher resource Group
