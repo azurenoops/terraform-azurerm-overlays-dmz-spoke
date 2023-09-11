@@ -298,15 +298,13 @@ module "vnet-spoke" {
 ```
 ## Network Security Groups
 
-By default, the network security groups connected to subnets will not block all traffic. Use the `nsg_subnet_rules` variable in this Terraform module to modify the Network Security Group (NSG) for each subnet with additional rules for inbound and outbound traffic.
-
-In the example below, the Source and Destination columns have the values `VirtualNetwork`, `AzureLoadBalancer`, and `Internet`. These are service tags rather than IP addresses. In the protocol column, `Any` encompasses `TCP`, `UDP`, and `ICMP`. When creating a rule, you can specify `TCP`, `UDP`, `ICMP` or `*` for the protocol. Providing a `0.0.0.0/0` in the Source or Destination columns represents all addresses.
+Network security groups can be defined to manage traffic on subnets. Use the `nsg_subnet_rules` block in this Terraform module to modify the Network Security Group (NSG) for each subnet with additional rules for inbound and outbound traffic.  You have full control over the contents of the NSG and whether one is even created.
 
 > For more information on the subnet NSG rule structure, see the [Azurerm NSG Terraform documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_group#security_rule).
 
-*You cannot remove the default rules, but you can override them by creating rules with higher priorities.*
 
-```hcl
+### Create a subnet without an NSG
+``` hcl
 module "vnet-spoke" {
   source  = "azurenoops/overlays-dmz-spoke/azurerm"
   version = "x.x.x"
@@ -318,7 +316,47 @@ module "vnet-spoke" {
     default = {
       subnet_name           = "default"
       subnet_address_prefix = "10.1.2.0/24"
-    nsg_subnet_rules = [
+    }
+  }
+}
+```
+
+### Create a subnet with an NSG that contains the default rules
+*You cannot remove the default rules, but you can override them by creating rules with higher priorities.*
+``` hcl
+module "vnet-spoke" {
+  source  = "azurenoops/overlays-dmz-spoke/azurerm"
+  version = "x.x.x"
+
+  # .... omitted
+
+  # Multiple Subnets, Service delegation, Service Endpoints
+  subnets = {
+    default = {
+      subnet_name           = "default"
+      subnet_address_prefix = "10.1.2.0/24"
+      nsg_subnet_rules      = []
+    }
+  }
+}
+```
+
+### Create a subnet with an NSG that contains the default rules and your custom rules
+*You cannot remove the default rules, but you can override them by creating rules with higher priorities.*
+``` hcl
+module "vnet-spoke" {
+  source  = "azurenoops/overlays-dmz-spoke/azurerm"
+  version = "x.x.x"
+
+  # .... omitted
+
+  # Multiple Subnets, Service delegation, Service Endpoints
+  subnets = {
+    default = {
+      subnet_name           = "default"
+      subnet_address_prefix = "10.1.2.0/24"
+
+      nsg_subnet_rules = [
       # Docs for the Security Rule block can be found at https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_group#security_rule 
       {
         name                       = "allow-web-apps",
@@ -345,12 +383,15 @@ module "vnet-spoke" {
         destination_address_prefix = "*"      
       }
     ]
+    }
   }
-
-# ....omitted
-
 }
 ```
+
+
+
+
+
 
 ## Peering to the Hub virtual network
 

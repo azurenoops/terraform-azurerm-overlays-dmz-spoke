@@ -14,7 +14,7 @@ variable "spoke_subnets" {
     service_endpoints                          = list(string)
     private_endpoint_network_policies_enabled  = bool
     private_endpoint_service_endpoints_enabled = bool
-
+    
     # Delegation block - see https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet#delegation
     delegation = optional(object({
       name = string
