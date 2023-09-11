@@ -8,7 +8,7 @@ module "mod_vnet_spoke" {
   providers = {
     azurerm.hub_network = azurerm.hub
   }
-  
+
   # By default, this module will create a resource group, provide the name here
   # To use an existing resource group, specify the existing resource group name, 
   # and set the argument to `create_resource_group = false`. Location will be same as existing RG.
@@ -21,7 +21,8 @@ module "mod_vnet_spoke" {
 
   # Collect Spoke Virtual Network Parameters
   # Spoke network details to create peering and other setup
-  hub_virtual_network_id          = data.azurerm_virtual_network.hub-vnet.id
+  hub_virtual_network_name        = data.azurerm_virtual_network.hub-vnet.name
+  hub_resource_group_name         = data.azurerm_virtual_network.hub-vnet.resource_group_name
   hub_firewall_private_ip_address = data.azurerm_firewall.hub-fw.ip_configuration[0].private_ip_address
   hub_storage_account_id          = data.azurerm_storage_account.hub-st.id
 
