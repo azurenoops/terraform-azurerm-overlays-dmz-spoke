@@ -98,8 +98,13 @@ variable "virtual_network_name" {
 # Hub Configuration   ##
 #####################################
 
-variable "hub_virtual_network_id" {
-  description = "The id of hub virutal network"
+variable "hub_virtual_network_name" {
+  description = "The name of hub virutal network"
+  default     = ""
+}
+
+variable "hub_resource_group_name" {
+  description = "The name of hub resource group"
   default     = ""
 }
 

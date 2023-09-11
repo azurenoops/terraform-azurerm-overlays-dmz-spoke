@@ -5,7 +5,10 @@ module "mod_vnet_spoke" {
   #source  = "azurenoops/overlays-workload-spoke/azurerm"
   #version = "~> x.x.x"
   source = "../../.."
-
+  providers = {
+    azurerm.hub_network = azurerm.hub
+  }
+  
   # By default, this module will create a resource group, provide the name here
   # To use an existing resource group, specify the existing resource group name, 
   # and set the argument to `create_resource_group = false`. Location will be same as existing RG.
