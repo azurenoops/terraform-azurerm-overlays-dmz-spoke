@@ -59,7 +59,7 @@ output "subnet_address_prefixes" {
 
 //TODO: Fix this output
 # Network Security group ids
-/* output "network_security_group_ids" {
+output "network_security_group_ids" {
   description = "Map of ids for default NSGs"
   value = { for key, id in zipmap(
     sort(keys(var.spoke_subnets)),
@@ -74,7 +74,7 @@ output "network_security_group_names" {
     sort(values(azurerm_network_security_group.nsg)[*]["name"])) :
   key => { key = key, name = name } }
 }
- */
+
  
 # DDoS Protection Plan
 output "ddos_protection_plan_id" {
