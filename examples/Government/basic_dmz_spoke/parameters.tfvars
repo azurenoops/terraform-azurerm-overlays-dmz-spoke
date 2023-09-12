@@ -28,27 +28,43 @@ enable_traffic_analytics = true
 # DMZ Virtual Network Parameters
 dmz_name               = "wl"
 dmz_vnet_address_space = ["10.8.59.0/24"]
-dmz_subnets = {
-  default = {
-    name                                       = "wl"
-    address_prefixes                           = ["10.8.59.224/27"]
+ dmz_subnets = {
+  untrusted = {
+    name                                       = "untrusted"
+    address_prefixes                           = ["10.8.59.0/27"]
     service_endpoints                          = ["Microsoft.Storage"]
     private_endpoint_network_policies_enabled  = false
     private_endpoint_service_endpoints_enabled = true
+    
     nsg_subnet_rules = [
       {
         name                       = "Allow-Traffic-From-Spokes",
         description                = "Allow traffic from spokes",
-        priority                   = 200,
+        priority                   = 100,
         direction                  = "Inbound",
         access                     = "Allow",
-        protocol                   = "*",
+        protocol                   = "Tcp",
         source_port_range          = "*",
-        destination_port_ranges    = ["22", "80", "443", "3389"],
-        source_address_prefixes    = ["10.8.6.0/24", "10.8.7.0/24", "10.8.8.0/24"],
-        destination_address_prefix = "10.8.59.0/24"
+        destination_port_range     = "443",
+        source_address_prefix      = "*",
+        destination_address_prefix = "*"
       }
     ]
+  }
+  trusted = {
+    name                                       = "trusted"
+    address_prefixes                           = ["10.8.59.64/27"]
+    service_endpoints                          = ["Microsoft.Storage"]
+    private_endpoint_network_policies_enabled  = false
+    private_endpoint_service_endpoints_enabled = true
+  }
+  semitrusted = {
+    name                                       = "semitrusted"
+    address_prefixes                           = ["10.8.59.128/27"]
+    service_endpoints                          = ["Microsoft.Storage"]
+    private_endpoint_network_policies_enabled  = false
+    private_endpoint_service_endpoints_enabled = true
+    nsg_subnet_rules = []
   }
 }
 
