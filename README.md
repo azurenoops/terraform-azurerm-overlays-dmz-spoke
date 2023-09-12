@@ -298,12 +298,14 @@ module "vnet-spoke" {
 ```
 ## Network Security Groups
 
-Network security groups can be defined to manage traffic on subnets. Use the `nsg_subnet_rules` block in this Terraform module to modify the Network Security Group (NSG) for each subnet with additional rules for inbound and outbound traffic.  You have full control over the contents of the NSG and whether one is even created.
+Network security groups are defined to manage and log traffic on subnets. Use the `nsg_subnet_rules` block in this Terraform module to modify the Network Security Group (NSG) for each subnet with additional rules for inbound and outbound traffic.  The NSG will be created with Default rules and you can add additional rules to override the default behavior here.
+
+The presence of the `nsg_subnet_rules` block is optional, but an NSG with default rules will be created and attached to the subnet regardless.  There is no way to create a subnet without an NSG from this module as NSGs are required for Network Flow Logs to operate and Flow Logs are required to meet SCCA requirements.
 
 > For more information on the subnet NSG rule structure, see the [Azurerm NSG Terraform documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_group#security_rule).
 
 
-### Create a subnet without an NSG
+### Create a subnet with an NSG and default rules by omitting the `nsg_subnet_rules` block
 ``` hcl
 module "vnet-spoke" {
   source  = "azurenoops/overlays-dmz-spoke/azurerm"
@@ -321,7 +323,8 @@ module "vnet-spoke" {
 }
 ```
 
-### Create a subnet with an NSG that contains the default rules
+### Create a subnet with an NSG that contains the default rules by adding an empty `nsg_subnet_rules` block
+
 *You cannot remove the default rules, but you can override them by creating rules with higher priorities.*
 ``` hcl
 module "vnet-spoke" {

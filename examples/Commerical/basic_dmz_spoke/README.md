@@ -43,7 +43,7 @@ module "mod_vnet_spoke" {
 
   # (Required) Multiple Subnets, Service delegation, Service Endpoints, Network security groups
   # These are default subnets with required configuration, check README.md for more details
-  # Route_table and NSG association to be added automatically for all subnets listed here.
+  # NSG association to be added automatically for all subnets listed here.
   # subnet name will be set as per Azure naming convention by defaut. expected value here is: <App or project name>
   spoke_subnets = var.dmz_subnets
 
