@@ -15,3 +15,9 @@ provider "azurerm" {
   features {}
   skip_provider_registration = true
 }
+
+provider "azurerm" {
+  features {}
+  alias = "hub"
+  skip_provider_registration = true
+}
