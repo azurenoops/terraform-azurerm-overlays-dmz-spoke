@@ -6,7 +6,7 @@
 # Peering between Hub and Spoke Virtual Network
 #-----------------------------------------------
 resource "azurerm_virtual_network_peering" "spoke_to_hub" {
-  depends_on                   = [azurerm_virtual_network.spoke_vnet, data.azurerm_virtual_network.hub_vnet]
+  depends_on                   = [azurerm_subnet.default_snet, data.azurerm_virtual_network.hub_vnet]
   name                         = lower("peering-to-hub-${data.azurerm_virtual_network.hub_vnet.name}")
   resource_group_name          = local.resource_group_name
   virtual_network_name         = azurerm_virtual_network.spoke_vnet.name
@@ -18,7 +18,7 @@ resource "azurerm_virtual_network_peering" "spoke_to_hub" {
 }
 
 resource "azurerm_virtual_network_peering" "hub_to_spoke" {
-  depends_on                   = [azurerm_virtual_network.spoke_vnet, data.azurerm_virtual_network.hub_vnet]
+  depends_on                   = [azurerm_subnet.default_snet, data.azurerm_virtual_network.hub_vnet]
   provider                     = azurerm.hub_network
   name                         = lower("peering-${data.azurerm_virtual_network.hub_vnet.name}-to-${var.workload_name}-spoke")
   resource_group_name          = data.azurerm_virtual_network.hub_vnet.resource_group_name
