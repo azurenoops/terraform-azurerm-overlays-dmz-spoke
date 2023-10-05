@@ -24,7 +24,7 @@ module "mod_vnet_spoke" {
   hub_virtual_network_name        = data.azurerm_virtual_network.hub-vnet.name
   hub_resource_group_name         = data.azurerm_virtual_network.hub-vnet.resource_group_name
   hub_firewall_private_ip_address = data.azurerm_firewall.hub-fw.ip_configuration[0].private_ip_address
-  hub_storage_account_id          = data.azurerm_storage_account.hub-st.id
+
 
   # To enable traffic analytics, set `enable_traffic_analytics = true` in the module.
   enable_traffic_analytics = var.enable_traffic_analytics

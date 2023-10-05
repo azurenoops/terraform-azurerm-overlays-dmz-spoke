@@ -3,11 +3,11 @@ data "azurerm_virtual_network" "hub-vnet" {
   resource_group_name = "anoa-eus-hub-core-dev-rg"
 }
 
-data "azurerm_storage_account" "hub-st" {
+/* data "azurerm_storage_account" "hub-st" {
   name                = "anoaeus3ba012f68bdevst"
   resource_group_name = "anoa-eus-hub-core-dev-rg"
 }
-
+ */
 data "azurerm_firewall" "hub-fw" {
   name                = "anoa-eus-hub-core-dev-fw"
   resource_group_name = "anoa-eus-hub-core-dev-rg"
