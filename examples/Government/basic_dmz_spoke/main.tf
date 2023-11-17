@@ -42,11 +42,11 @@ module "mod_vnet_spoke" {
   # (Required) Multiple Subnets, Service delegation, Service Endpoints, Network security groups
   # These are default subnets with required configuration, check README.md for more details
   # Route_table and NSG association to be added automatically for all subnets listed here.
-  # subnet name will be set as per Azure naming convention by defaut. expected value here is: <App or project name>
+  # subnet name will be set as per Azure naming convention by default. expected value here is: <App or project name>
   spoke_subnets = var.dmz_subnets
 
   # Private DNS Zone Settings
-  # If you do want to create addtional Private DNS Zones, 
+  # If you do want to create additional Private DNS Zones, 
   # add in the list of private_dns_zones to be created.
   # else, remove the private_dns_zones argument.
   private_dns_zones = var.dmz_private_dns_zones
